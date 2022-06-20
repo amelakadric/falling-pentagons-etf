@@ -7,11 +7,11 @@ public abstract class NebeskoTelo extends Objekat{
 	public NebeskoTelo(int x, int y, Color color, int r) {
 		super(x, y, color);
 		this.r=r;
+	}	
+	
+	public synchronized void pomeriY() {
+		int ny= this.getY()+5;
+		this.setY(ny);
 	}
-
-	
-
-	
-	
 	
 }

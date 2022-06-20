@@ -14,26 +14,32 @@ public class Svemir extends Canvas implements Runnable{
 	
 	
 	@Override
-	public void paint(Graphics g) {
-		thread = new Thread(this);
-		thread.start();
+	public synchronized void paint(Graphics g) {
+		
 		for(NebeskoTelo n:nebeskaTela) {
 			n.paint(getGraphics());
 		}
 		super.paint(g);
 	}
 	
+	public void pokreni() {
+		thread = new Thread(this);
+		thread.start();
+		repaint();
+	}
 	
 	public synchronized void addNebeskoTelo(NebeskoTelo n) {
 		nebeskaTela.add(n);
 	}
 	
+	
+	
 	public synchronized void kretanje() {
 		for( NebeskoTelo n:nebeskaTela) {
-			int ny= n.getY()+5;
-			n.setY(ny);
+			n.pomeriY();
 		}
 	}
+	
 	
 	public Svemir() {
 		this.setBackground(Color.BLACK);
@@ -43,15 +49,14 @@ public class Svemir extends Canvas implements Runnable{
 
 	@Override
 	public void run() {
+		
 		try {	
 			while(!thread.isInterrupted()) {
-			thread.sleep(100);
-			repaint();
-//			kretanje();
+				thread.sleep(100);
+				kretanje();
+				repaint();
 			}
 		}catch(InterruptedException e){}
-		
-		
 		
 	}
 	

@@ -10,9 +10,9 @@ import java.awt.event.WindowEvent;
 
 public class Simulator extends Frame{
 	
-	private Svemir svemir = new Svemir();
+	private Svemir svemir;
 	Panel komande = new Panel();
-	Generator generator = new Generator(svemir);
+	Generator generator;
 	Button button = new Button("Pokreni!");
 	Panel buttonPanel = new Panel();
 	
@@ -23,8 +23,8 @@ public class Simulator extends Frame{
 		
 		button.addActionListener((ae)->{
 			generator.pokreni();
-//			svemir.repaint();
-			button.disable();
+			svemir.pokreni();
+			button.setEnabled(false);
 		});
 		
 		buttonPanel.add(button);
@@ -40,14 +40,19 @@ public class Simulator extends Frame{
 		
 		setResizable(true);
 		
+		svemir = new Svemir();
+		generator = new Generator(svemir);
+		
 		populateWindow();
 		
 		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				svemir.thread.interrupt();
-				generator.thread.interrupt();
+				try{
+					svemir.thread.interrupt();
+					generator.thread.interrupt();
+				}catch(Exception e1) {}	
 				dispose();
 			}
 		});

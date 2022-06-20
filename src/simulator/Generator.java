@@ -19,17 +19,16 @@ public class Generator implements Runnable {
 	public void run() {
 		try {
 			while(!thread.isInterrupted()) {
-			x=(int)(Math.random()*200);
-			y=0;
-			r=(int)(Math.random()*(30-10))+10;
-			NebeskoTelo nt = new Kometa(x, y, r);
-			svemir.addNebeskoTelo(nt);
-			thread.sleep(900);
+				x=(int)(Math.random()*200);
+				y=0;
+				r=(int)(Math.random()*(30-10))+10;
+				NebeskoTelo nt = new Kometa(x, y, r);
+				svemir.addNebeskoTelo(nt);
+				thread.sleep(900);
 			}
 			
 		} catch (InterruptedException e) {}
 		
-
 	}
 
 }
